@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 
 private lateinit var sceneView: View
 private lateinit var sunView: View
@@ -34,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         val heightAnimator = ObjectAnimator
             .ofFloat(sunView, "y", sunYStart, sunYEnd)
             .setDuration(3000)
+        //Добавление ускорения
+        heightAnimator.interpolator = AccelerateInterpolator()
+
         heightAnimator.start()
     }
 }
