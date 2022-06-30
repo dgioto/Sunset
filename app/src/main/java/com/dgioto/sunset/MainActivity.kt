@@ -1,5 +1,6 @@
 package com.dgioto.sunset
 
+import android.animation.AnimatorSet
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
@@ -57,11 +58,20 @@ class MainActivity : AppCompatActivity() {
         val sunsetSkyAnimator = ObjectAnimator
             .ofInt(skyView, "backgroundColor", blueSkyColor, sunsetSkyColor)
             .setDuration(3000)
-
         //Назначение ArgbEvaluator
         sunsetSkyAnimator.setEvaluator(ArgbEvaluator())
 
-        heightAnimator.start()
-        sunsetSkyAnimator.start()
+        //Создайте ночной анимации
+        val nightSkyAnimator = ObjectAnimator
+            .ofInt(skyView, "backgroundColor", sunsetSkyColor, nightSkyColor)
+            .setDuration(1500)
+        nightSkyAnimator.setEvaluator(ArgbEvaluator())
+
+        //Создайте AnimatorSet
+        val animatorSet = AnimatorSet()
+        animatorSet.play(heightAnimator)
+            .with(sunsetSkyAnimator)
+            .before(nightSkyAnimator)
+        animatorSet.start()
     }
 }
